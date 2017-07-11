@@ -72,6 +72,12 @@ def action(command):
 	if command.find("clear") != -1:
 		action = "clearscreen"
 
+	if command.find("make") != -1:
+		action = "make"
+	
+	if len(command) == 1 and command == "i" or command.find("inventory") != -1:
+		action = "inventory"
+
 
 # Finish
 	return action

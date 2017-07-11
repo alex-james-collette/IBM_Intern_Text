@@ -1,3 +1,9 @@
+################################
+###  			     ###
+###   	   IBM_TEXT.PY       ###
+###   			     ###
+################################
+
 import os
 import Parse
 import time
@@ -76,23 +82,44 @@ def room(currentroom):
 			if action == "clearscreen":
 				os.system('cls' if os.name == 'nt' else 'clear')
 				return currentroom
+			
 			elif action == "look":
 				print desc
 				return currentroom
+			
+			elif action == "inventory":
+				print " INVENTORY "
+				print "-----------"
+				print "Gold:", inventory['gold']
+				print "Backpack:", ', '.join(inventory['backpack'])
+				print "Tropheys:", ', '.join(inventory['trophys'])
+				print "Remaining Popcorn:", inventory['popcorn']
+				print
+				return currentroom
+
+
+			elif action in __import__(currentroom).specials:
+				print "debug"
+				try:
+					func = getattr(__import__(currentroom), __import__(currentroom).specials[action])
+				except AttributeError:
+					continue
+				else:
+					func()
+					return currentroom
+
+
 			else:
 				# Move or dont or do something
 				try:
-					func = getattr(__import__(currentroom), action)
-		                except AttributeError:
+					nextroom = __import__(currentroom).directions[action]
+		                except KeyError:
+					print "You cant go this way!(debug)"
 					continue	
 				else:
-					changeroom, nextroom = func(command)
-					if changeroom == 1:
 						continuetoroom = 1
 						return nextroom
-					else:
-						print "You cant go this way!"
-						return currentroom
+					
 
 
 	
