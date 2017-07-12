@@ -7,6 +7,7 @@
 import os
 import Parse
 import time
+import sys
 
 
 os.system('cls' if os.name == 'nt' else 'clear')
@@ -60,7 +61,9 @@ def room(currentroom):
 	continuetoroom = 0
 	name = __import__(currentroom).Name
 	show_desc = __import__(currentroom).Visited
-	desc = __import__(currentroom).Description
+	desc = "Description"
+	descfunc = getattr(__import__(currentroom), desc)
+	desc = descfunc() 
 	print name
 	if show_desc == 0:
 		print desc
@@ -79,14 +82,19 @@ def room(currentroom):
 			print action
 		else:
 			# GAME WIDE COMMANDS
+
+#####################  CLEAR  ########################
 			if action == "clearscreen":
 				os.system('cls' if os.name == 'nt' else 'clear')
 				return currentroom
 			
+######################  LOOK  #########################
 			elif action == "look":
+				desc = descfunc()
 				print desc
 				return currentroom
 			
+####################  INVENTORY  #######################
 			elif action == "inventory":
 				print " INVENTORY "
 				print "-----------"
@@ -98,8 +106,57 @@ def room(currentroom):
 				return currentroom
 
 
+######################  GET  ###########################
+			elif action == "get":
+				if item == 0:
+					print "What do you want to get?"
+				elif item == "gold":
+					try:
+						if "gold" in __import__(currentroom).items:
+							if __import__(currentroom).items['gold'] > 0:
+								amount = __import__(currentroom).items['gold']
+								inventory['gold'] = inventory['gold'] + amount
+								__import__(currentroom).items['gold'] = 0
+								print "Taken"
+							else:
+								print "There is no gold here."
+					except AttributeError:
+						print "There is no gold here."
+				else:
+					print "You cant get that."
+
+#######################  MAKE  ###########################
+			elif action == "make":
+				if item == 0:
+					print "What do you want to make?"
+				elif item == "popcorn":
+					counter = 11
+        				print "popping..."
+        				original = counter
+       					while counter > 0:
+                				length = original - counter
+                				progressbar = ("=" * 4) * length
+
+                				numofwhite = counter - 1
+                				white_space = (" " * 4) * numofwhite
+
+                				percent_done = (length / (original - 1)) * 100
+                				percent_done = round(percent_done)
+
+                				print progressbar, white_space, percent_done, "%              \r",
+                				sys.stdout.flush()
+
+                				time.sleep( .25 )
+                				counter -= 1
+        				else:
+                				print
+                				print "100 popcorn added to bin!"
+                				inventory['popcorn'] = inventory['popcorn'] + 100
+				else:
+					print "You cant make that."
+
 			elif action in __import__(currentroom).specials:
-				print "debug"
+				print
 				try:
 					func = getattr(__import__(currentroom), __import__(currentroom).specials[action])
 				except AttributeError:
@@ -114,7 +171,7 @@ def room(currentroom):
 				try:
 					nextroom = __import__(currentroom).directions[action]
 		                except KeyError:
-					print "You cant go this way!(debug)"
+					print "You cant go this way!"
 					continue	
 				else:
 						continuetoroom = 1

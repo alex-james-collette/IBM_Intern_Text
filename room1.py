@@ -9,14 +9,29 @@
 #Name
 Name = "Front Parking Lot"
 
+###########################  DESCRIPTION FUNCTIONS  ###########################
+
 #Description
-Description = """You are standing in a partially filled parking lot.
+Desctext = """You are standing in a partially filled parking lot.
 A sign is in front of you. A sidewalk leads to the entrance of a building."""
+
+def Description():
+	if True:
+		Final = Desctext
+	else:
+		Final = Desctext
+	return Final
+
 
 ##############################  DYNAMIC VARIABLES  #############################
 
 # Whether or not visited yet
 Visited = 0
+
+#Items in room
+items = {
+	"gold" : 0	
+}
 
 ###################################  ACTIONS  ##################################
 

@@ -62,7 +62,7 @@ def action(command):
 	if command.find("look") != -1:
                 action = "look"
 	
-	if command.find("get") != -1:
+	if command.find("get") != -1 or command.find("take") != -1:
                 action = "get"
 	
 	if command.find("attack") != -1:
@@ -103,6 +103,14 @@ def item(command):
 
 	elif command.find("badge")!= -1:
 		item = "badge"
+
+	elif command.find("gold")!= -1:
+		item = "gold"
+	
+	elif command.find("id")!= -1:
+		item = "idbadge"
+	elif command.find("popcorn")!= -1:
+		item = "popcorn"
 
 # If no item
 	
