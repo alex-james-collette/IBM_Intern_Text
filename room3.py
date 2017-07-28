@@ -28,6 +28,7 @@ def Description():
 Visited = 0
 
 #Items in room
+#MUST LIST GOLD, PUT 0 IF NONE
 items = {
 	"gold" : 10
 }
@@ -37,10 +38,8 @@ items = {
 # NAVIGATION
 directions = {
 	"north" : "room1",
-	"east" : "room4"
+	"east" : "room8"
 }
 
 #Special Actions
-specials = {
-
-}
+specials = []

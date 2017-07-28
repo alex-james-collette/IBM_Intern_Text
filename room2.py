@@ -3,9 +3,7 @@
 ###          ROOM TWO          ###
 ###                            ###
 ##################################
-from __future__ import division
-import time
-import os
+
 ##############################  STATIC VARIABLES  ##############################
 
 #Name
@@ -31,6 +29,7 @@ def Description():
 Visited = 0
 
 #Items in room
+#MUST LIST GOLD
 items = {
 	"gold" : 0
 }
@@ -44,5 +43,4 @@ directions = {
 }
 
 #Special Actions
-specials = {
-}
+specials = []
